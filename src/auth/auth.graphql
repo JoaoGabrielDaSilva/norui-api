@@ -1,0 +1,26 @@
+type Auth {
+  accessToken: String!
+  refreshToken: String!
+  user: User!
+}
+
+type DeleteReturn {
+  success: Boolean!
+}
+
+input LoginLocalInput {
+  email: String!
+  password: String!
+}
+
+input SignUpLocalInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  loginLocal(loginInput: LoginLocalInput!): Auth!
+  signUpLocal(signUpInput: SignUpLocalInput!): Auth!
+  logoutLocal(userId: String!): DeleteReturn
+}

@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator nestgraphql {
+  provider               = "node node_modules/prisma-nestjs-graphql"
+  output                 = "../src/@generated/prisma-nestjs-graphql"
+  fields_Validator_from  = "class-validator"
+  fields_Validator_input = true
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model User {
+  id String @id @default(uuid())
+  name String
+  /// @Validator.IsEmail({message: "O email deve ser válido"})
+  email String @unique
+  hash String
+  hashedRt String?
+  restaurant Restaurant?
+}
+
+
+
+model Restaurant {
+  id String @id @default(uuid())
+  name String
+  user User @relation(fields: [userId], references: [id])
+  userId String @unique
+  tables Table[]
+}
+
+model Table {
+  id String @id @default(uuid())
+  /// @Validator.MinLength(2, {message: "O número da mesa deve conter pelo menos 2 caracteres"})
+  number String
+  restaurant Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String? 
+}

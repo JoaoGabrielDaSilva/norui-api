@@ -1,0 +1,27 @@
+type Table {
+  id: String!
+  number: String!
+  restaurant: Restaurant
+  restaurantId: String
+}
+
+input CreateTableInput {
+  number: String!
+  restaurantId: String!
+}
+
+input UpdateTableInput {
+  id: String!
+  number: String
+}
+
+type Query {
+  tables: [Table]!
+  table(id: String!): Table
+}
+
+type Mutation {
+  createTable(createTableInput: CreateTableInput!): Table!
+  updateTable(updateTableInput: UpdateTableInput!): Table!
+  removeTable(id: String!): Table
+}

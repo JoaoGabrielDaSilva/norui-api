@@ -1,0 +1,29 @@
+type Restaurant {
+  id: String!
+  name: String!
+  user: User
+  userId: String
+  tables: [Table]
+}
+
+input CreateRestaurantInput {
+  name: String!
+  userId: String!
+}
+
+input UpdateRestaurantInput {
+  id: String!
+  name: String
+  userId: String
+}
+
+type Query {
+  restaurants: [Restaurant]!
+  restaurant(id: String!): Restaurant
+}
+
+type Mutation {
+  createRestaurant(createRestaurantInput: CreateRestaurantInput!): Restaurant!
+  updateRestaurant(updateRestaurantInput: UpdateRestaurantInput!): Restaurant!
+  removeRestaurant(id: String!): Restaurant
+}
